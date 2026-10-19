@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+        (() => {
+            const theme = localStorage.getItem('clubhub-theme');
+            if (theme === 'dark') document.documentElement.dataset.theme = 'dark';
+        })();
+    </script>
     <title>ClubHub - Événements</title>
 </head>
 <body>
@@ -14,6 +20,7 @@
                 <li><a href="index.html">Accueil</a></li>
                 <li><a href="evenements.html">Tous les événements</a></li>
                 <li><a href="evenement.html">Atelier Arduino</a></li>
+                <li><button class="theme-toggle" type="button">Mode sombre</button></li>
             </ul>
         </nav>
     </header>
@@ -21,48 +28,29 @@
     <main>
         <h1>Tous les événements</h1>
 
+        <section class="event-controls" aria-label="Filtres des événements">
+            <label for="search">Rechercher</label>
+            <input type="search" id="search" placeholder="Ex. Arduino">
+            <label for="club-filter">Club</label>
+            <select id="club-filter">
+                <option value="">Tous les clubs</option>
+            </select>
+            <label class="checkbox-label" for="favorites-only">
+                <input type="checkbox" id="favorites-only">
+                Seulement mes favoris
+            </label>
+            <label for="sort">Trier par</label>
+            <select id="sort">
+                <option value="date">Date</option>
+                <option value="places">Places (décroissant)</option>
+            </select>
+        </section>
+
+        <p class="results-count" aria-live="polite"></p>
+        <p class="empty-message" hidden>Aucun événement ne correspond à votre recherche.</p>
         <section aria-labelledby="liste-evenements">
             <h2 id="liste-evenements">Les événements à venir</h2>
-            <article>
-                <h3>Atelier Arduino pour débutants</h3>
-                <p>Club : Club Robotique</p>
-                <p>Date : <time datetime="2026-10-14T14:00">14 octobre à 14 h</time></p>
-                <p>Lieu : Salle B204</p>
-                <p>Places : 20</p>
-                <a href="evenement.html">Voir le détail</a>
-            </article>
-            <article>
-                <h3>Sortie photo en ville</h3>
-                <p>Club : Club Photo</p>
-                <p>Date : <time datetime="2026-10-17T09:00">17 octobre à 9 h</time></p>
-                <p>Lieu : Entrée principale</p>
-                <p>Places : 15</p>
-                <a href="evenement.html">Voir le détail</a>
-            </article>
-            <article>
-                <h3>Conférence : l'IA dans l'industrie</h3>
-                <p>Club : Club IA</p>
-                <p>Date : <time datetime="2026-10-21T10:00">21 octobre à 10 h</time></p>
-                <p>Lieu : Amphithéâtre A</p>
-                <p>Places : 120</p>
-                <a href="evenement.html">Voir le détail</a>
-            </article>
-            <article>
-                <h3>Tournoi blitz inter promo</h3>
-                <p>Club : Club Échecs</p>
-                <p>Date : <time datetime="2026-10-24T15:00">24 octobre à 15 h</time></p>
-                <p>Lieu : Foyer des étudiants</p>
-                <p>Places : 32</p>
-                <a href="evenement.html">Voir le détail</a>
-            </article>
-            <article>
-                <h3>Hackathon impact social</h3>
-                <p>Club : Club Entrepreneuriat</p>
-                <p>Date : <time datetime="2026-10-31T09:00">31 octobre à 9 h</time></p>
-                <p>Lieu : Salle C101</p>
-                <p>Places : 40</p>
-                <a href="evenement.html">Voir le détail</a>
-            </article>
+            <div id="events-list"></div>
         </section>
 
         <section aria-labelledby="recapitulatif-evenements">
@@ -115,5 +103,6 @@
     <footer>
         <p>ClubHub - Les clubs étudiants réunis au même endroit.</p>
     </footer>
+    <script src="js/app.js" defer></script>
 </body>
 </html>

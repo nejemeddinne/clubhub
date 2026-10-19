@@ -10,6 +10,17 @@
     --radius: 14px;
 }
 
+[data-theme="dark"] {
+    --color-primary: #93c5fd;
+    --color-primary-dark: #bfdbfe;
+    --color-background: #0f172a;
+    --color-surface: #1e293b;
+    --color-text: #e2e8f0;
+    --color-muted: #cbd5e1;
+    --color-border: #475569;
+    --color-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
 @view-transition {
     navigation: auto;
 }
@@ -55,6 +66,10 @@ body {
     animation:
         page-in 420ms ease-out both,
         background-flow 18s ease-in-out infinite;
+}
+
+[data-theme="dark"] body {
+    background: var(--color-background);
 }
 
 @keyframes page-in {
@@ -163,6 +178,99 @@ a:hover,
 a:focus-visible {
     color: var(--color-primary-dark);
     text-decoration: underline;
+}
+
+.theme-toggle,
+.favorite-toggle {
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    color: var(--color-primary);
+    background: var(--color-surface);
+    cursor: pointer;
+    font: inherit;
+    font-weight: 700;
+}
+
+.theme-toggle {
+    padding: 0.5rem 0.75rem;
+}
+
+.event-controls {
+    display: grid;
+    grid-template-columns: auto minmax(12rem, 1fr) auto minmax(12rem, 1fr);
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--color-surface);
+}
+
+.event-controls input,
+.event-controls select {
+    min-width: 0;
+    padding: 0.65rem;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    color: var(--color-text);
+    background: var(--color-surface);
+    font: inherit;
+}
+
+.checkbox-label {
+    grid-column: 1 / -1;
+}
+
+.favorite-toggle {
+    align-self: flex-end;
+    padding: 0.25rem 0.55rem;
+    color: #f59e0b;
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+.results-count {
+    color: var(--color-muted);
+    font-weight: 700;
+}
+
+.empty-message {
+    padding: 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--color-surface);
+}
+
+.field-error {
+    min-height: 1.2em;
+    color: #b91c1c;
+    font-weight: 700;
+}
+
+.is-invalid {
+    border-color: #dc2626 !important;
+}
+
+.form-success {
+    padding: 0.75rem;
+    border-radius: 8px;
+    color: #166534;
+    background: #dcfce7;
+    font-weight: 700;
+}
+
+.is-near-limit {
+    color: #b45309;
+    font-weight: 700;
+}
+
+[data-theme="dark"] th,
+[data-theme="dark"] tr:nth-child(even),
+[data-theme="dark"] #inscription-form input:not([type="radio"]):not([type="checkbox"]),
+[data-theme="dark"] #inscription-form select,
+[data-theme="dark"] #inscription-form textarea {
+    color: var(--color-text);
+    background: #334155;
 }
 
 nav a:hover,

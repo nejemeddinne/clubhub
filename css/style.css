@@ -1,0 +1,545 @@
+:root {
+    --color-primary: #2563eb;
+    --color-primary-dark: #1d4ed8;
+    --color-background: #f4f7fb;
+    --color-surface: #ffffff;
+    --color-text: #1f2937;
+    --color-muted: #64748b;
+    --color-border: #dbe3ef;
+    --color-shadow: 0 10px 25px rgba(15, 23, 42, 0.08);
+    --radius: 14px;
+}
+
+[data-theme="dark"] {
+    --color-primary: #93c5fd;
+    --color-primary-dark: #bfdbfe;
+    --color-background: #0f172a;
+    --color-surface: #1e293b;
+    --color-text: #e2e8f0;
+    --color-muted: #cbd5e1;
+    --color-border: #475569;
+    --color-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
+}
+
+@view-transition {
+    navigation: auto;
+}
+
+::view-transition-old(root),
+::view-transition-new(root) {
+    animation-duration: 360ms;
+    animation-timing-function: ease-out;
+}
+
+::view-transition-old(root) {
+    animation-name: page-out;
+}
+
+::view-transition-new(root) {
+    animation-name: page-in;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    min-width: 320px;
+    color: var(--color-text);
+    background:
+        radial-gradient(circle at 15% 20%, rgba(147, 197, 253, 0.35), transparent 32%),
+        radial-gradient(circle at 85% 75%, rgba(191, 219, 254, 0.4), transparent 30%),
+        linear-gradient(
+            135deg,
+            #f4f7fb 0%,
+            #eaf2ff 35%,
+            #f8fafc 65%,
+            #e0ecff 100%
+        );
+    background-size: 180% 180%, 180% 180%, 300% 300%;
+    background-position: 0% 0%, 100% 100%, 0% 50%;
+    animation:
+        page-in 420ms ease-out both,
+        background-flow 18s ease-in-out infinite;
+}
+
+[data-theme="dark"] body {
+    background: var(--color-background);
+}
+
+@keyframes page-in {
+    from {
+        opacity: 0;
+        transform: translateY(0.75rem);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes page-out {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(-0.5rem);
+    }
+}
+
+@keyframes background-flow {
+    0% {
+        background-position: 0% 0%, 100% 100%, 0% 50%;
+    }
+
+    50% {
+        background-position: 100% 50%, 0% 50%, 100% 50%;
+    }
+
+    100% {
+        background-position: 0% 0%, 100% 100%, 0% 50%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    body {
+        animation: none;
+    }
+
+    ::view-transition-old(root),
+    ::view-transition-new(root) {
+        animation: none;
+    }
+}
+
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+header,
+main,
+footer {
+    width: min(1120px, calc(100% - 2rem));
+    margin-inline: auto;
+}
+
+header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding: 1.25rem 0;
+    /* background-color: var(--color-primary-dark); */
+}
+
+header h1 {
+    margin: 0;
+    color: var(--color-primary);
+    font-size: clamp(1.5rem, 3vw, 2rem);
+}
+
+nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.5rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+nav a,
+a {
+    color: var(--color-primary);
+    font-weight: 700;
+    text-decoration: none;
+}
+
+nav a {
+    display: block;
+    padding: 0.5rem 0.75rem;
+    border-radius: 8px;
+}
+
+nav a:hover,
+nav a:focus-visible,
+a:hover,
+a:focus-visible {
+    color: var(--color-primary-dark);
+    text-decoration: underline;
+}
+
+.theme-toggle,
+.favorite-toggle {
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    color: var(--color-primary);
+    background: var(--color-surface);
+    cursor: pointer;
+    font: inherit;
+    font-weight: 700;
+}
+
+.theme-toggle {
+    padding: 0.5rem 0.75rem;
+}
+
+.event-controls {
+    display: grid;
+    grid-template-columns: auto minmax(12rem, 1fr) auto minmax(12rem, 1fr);
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--color-surface);
+}
+
+.event-controls input,
+.event-controls select {
+    min-width: 0;
+    padding: 0.65rem;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    color: var(--color-text);
+    background: var(--color-surface);
+    font: inherit;
+}
+
+.checkbox-label {
+    grid-column: 1 / -1;
+}
+
+.favorite-toggle {
+    align-self: flex-end;
+    padding: 0.25rem 0.55rem;
+    color: #f59e0b;
+    font-size: 1.5rem;
+    line-height: 1;
+}
+
+.results-count {
+    color: var(--color-muted);
+    font-weight: 700;
+}
+
+.empty-message {
+    padding: 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--color-surface);
+}
+
+.field-error {
+    min-height: 1.2em;
+    color: #b91c1c;
+    font-weight: 700;
+}
+
+.is-invalid {
+    border-color: #dc2626 !important;
+}
+
+.form-success {
+    padding: 0.75rem;
+    border-radius: 8px;
+    color: #166534;
+    background: #dcfce7;
+    font-weight: 700;
+}
+
+.is-near-limit {
+    color: #b45309;
+    font-weight: 700;
+}
+
+[data-theme="dark"] th,
+[data-theme="dark"] tr:nth-child(even),
+[data-theme="dark"] #inscription-form input:not([type="radio"]):not([type="checkbox"]),
+[data-theme="dark"] #inscription-form select,
+[data-theme="dark"] #inscription-form textarea {
+    color: var(--color-text);
+    background: #334155;
+}
+
+nav a:hover,
+nav a:focus-visible {
+    background: #dbeafe;
+    text-decoration: none;
+}
+
+main {
+    padding: 2rem 0 4rem;
+}
+
+main > h1 {
+    margin: 0 0 0.75rem;
+    color: #172554;
+    font-size: clamp(1.8rem, 4vw, 2.8rem);
+    line-height: 1.15;
+}
+
+main > p {
+    max-width: 720px;
+    color: var(--color-muted);
+    font-size: 1.1rem;
+}
+
+section,
+main > article,
+main > figure {
+    margin-top: 2rem;
+}
+
+section h2 {
+    margin-bottom: 1rem;
+    color: #172554;
+    font-size: clamp(1.35rem, 3vw, 1.8rem);
+}
+
+section article {
+    display: inline-flex;
+    width: calc(50% - 0.75rem);
+    min-height: 220px;
+    margin: 0 1rem 1rem 0;
+    padding: 1.35rem;
+    vertical-align: top;
+    flex-direction: column;
+    align-items: flex-start;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--color-surface);
+    box-shadow: var(--color-shadow);
+}
+
+section article:nth-of-type(even) {
+    margin-right: 0;
+}
+
+article h3 {
+    margin-top: 0;
+    color: #1e3a8a;
+    line-height: 1.3;
+}
+
+article p {
+    margin: 0.25rem 0;
+}
+
+section article a {
+    margin-top: auto;
+    padding-top: 0.75rem;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow: hidden;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--color-surface);
+    box-shadow: var(--color-shadow);
+}
+
+caption {
+    margin-bottom: 0.75rem;
+    color: var(--color-muted);
+    font-weight: 700;
+    text-align: left;
+}
+
+th,
+td {
+    padding: 0.85rem 1rem;
+    border: 1px solid var(--color-border);
+    text-align: left;
+}
+
+th {
+    color: #172554;
+    background: #dbeafe;
+}
+
+tr:nth-child(even) {
+    background: #f8fafc;
+}
+
+figure {
+    padding: 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--color-surface);
+    box-shadow: var(--color-shadow);
+}
+
+figure img {
+    display: block;
+    width: min(100%, 640px);
+    height: auto;
+    margin-inline: auto;
+    border-radius: 10px;
+}
+
+figcaption {
+    margin-top: 0.75rem;
+    color: var(--color-muted);
+    text-align: center;
+}
+
+ul {
+    padding-left: 1.25rem;
+}
+
+article section {
+    padding: 1.25rem;
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius);
+    background: var(--color-surface);
+    box-shadow: var(--color-shadow);
+}
+
+#programme,
+#apporter,
+#inscription,
+#liste-evenements,
+#recapitulatif-evenements,
+#prochains-evenements {
+    margin-top: 0;
+}
+
+#inscription-form {
+    display: grid;
+    gap: 0.5rem;
+}
+
+#inscription-form p {
+    display: grid;
+    gap: 0.35rem;
+    margin: 0;
+}
+
+#inscription-form label,
+#inscription-form legend {
+    font-weight: 700;
+}
+
+#inscription-form input:not([type="radio"]):not([type="checkbox"]),
+#inscription-form select,
+#inscription-form textarea {
+    width: 100%;
+    padding: 0.7rem 0.8rem;
+    border: 1px solid #b8c5d6;
+    border-radius: 8px;
+    color: var(--color-text);
+    background: #fff;
+    font: inherit;
+}
+
+#inscription-form input:focus,
+#inscription-form select:focus,
+#inscription-form textarea:focus {
+    outline: 3px solid rgba(37, 99, 235, 0.2);
+    border-color: var(--color-primary);
+}
+
+#inscription-form fieldset {
+    margin: 0.5rem 0;
+    padding: 1rem;
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+}
+
+#inscription-form fieldset p,
+#inscription-form p:has(input[type="checkbox"]) {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+#inscription-form button {
+    width: fit-content;
+    margin-top: 0.5rem;
+    padding: 0.75rem 1.25rem;
+    border: 0;
+    border-radius: 8px;
+    color: #fff;
+    background: var(--color-primary);
+    cursor: pointer;
+    font: inherit;
+    font-weight: 700;
+}
+
+#inscription-form button:hover,
+#inscription-form button:focus-visible {
+    background: var(--color-primary-dark);
+}
+
+footer {
+    padding: 1.5rem 0;
+    border-top: 1px solid var(--color-border);
+    color: var(--color-muted);
+    text-align: center;
+}
+
+@media (max-width: 700px) {
+    header {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 0.75rem;
+    }
+
+    nav ul {
+        justify-content: flex-start;
+    }
+
+    main {
+        padding-top: 1rem;
+    }
+
+    section article {
+        display: flex;
+        width: 100%;
+        margin-right: 0;
+    }
+
+    table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
+    }
+
+    th,
+    td {
+        padding: 0.7rem;
+    }
+}
+
+@media (max-width: 420px) {
+    header,
+    main,
+    footer {
+        width: min(100% - 1.25rem, 1120px);
+    }
+
+    nav a {
+        padding: 0.4rem 0.55rem;
+        font-size: 0.9rem;
+    }
+
+    article section,
+    figure,
+    section article {
+        padding: 1rem;
+    }
+}

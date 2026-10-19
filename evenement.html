@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+        (() => {
+            const theme = localStorage.getItem('clubhub-theme');
+            if (theme === 'dark') document.documentElement.dataset.theme = 'dark';
+        })();
+    </script>
     <title>ClubHub - Atelier Arduino</title>
 </head>
 <body>
@@ -14,6 +20,7 @@
                 <li><a href="index.html">Accueil</a></li>
                 <li><a href="evenements.html">Tous les événements</a></li>
                 <li><a href="evenement.html">Atelier Arduino</a></li>
+                <li><button class="theme-toggle" type="button">Mode sombre</button></li>
             </ul>
         </nav>
     </header>
@@ -49,22 +56,26 @@
 
             <section aria-labelledby="inscription">
                 <h2 id="inscription">Formulaire d'inscription</h2>
-                <form id="inscription-form" action="inscription.php" method="post">
+                <form id="inscription-form" action="inscription.php" method="post" novalidate>
                     <p>
                         <label for="nom-complet">Nom complet</label>
-                        <input type="text" id="nom-complet" name="nom_complet" minlength="3" required>
+                        <input type="text" id="nom-complet" name="nom_complet" minlength="3" required aria-describedby="nom-error">
+                        <small id="nom-error" class="field-error"></small>
                     </p>
                     <p>
                         <label for="email">Adresse e-mail</label>
-                        <input type="email" id="email" name="email" required>
+                        <input type="email" id="email" name="email" required aria-describedby="email-error">
+                        <small id="email-error" class="field-error"></small>
                     </p>
                     <p>
                         <label for="niveau">Niveau d'études</label>
-                        <select id="niveau" name="niveau">
+                        <select id="niveau" name="niveau" required aria-describedby="niveau-error">
+                            <option value="">Choisissez votre niveau</option>
                             <option value="1re-annee">1re année</option>
                             <option value="2e-annee">2e année</option>
                             <option value="3e-annee">3e année</option>
                         </select>
+                        <small id="niveau-error" class="field-error"></small>
                     </p>
                     <fieldset>
                         <legend>Avez-vous déjà utilisé un Arduino ?</legend>
@@ -79,13 +90,16 @@
                     </fieldset>
                     <p>
                         <label for="motivation">Motivation</label>
-                        <textarea id="motivation" name="motivation" rows="5" cols="40"></textarea>
+                        <textarea id="motivation" name="motivation" rows="5" cols="40" maxlength="300" aria-describedby="motivation-count"></textarea>
+                        <small id="motivation-count">0 / 300</small>
                     </p>
                     <p>
-                        <input type="checkbox" id="reglement" name="accepte_reglement" value="oui" required>
+                        <input type="checkbox" id="reglement" name="accepte_reglement" value="oui" required aria-describedby="reglement-error">
                         <label for="reglement">J'accepte le règlement du club</label>
+                        <small id="reglement-error" class="field-error"></small>
                     </p>
                     <button type="submit">S'inscrire</button>
+                    <p class="form-success" hidden>Votre inscription est validée. Merci !</p>
                 </form>
             </section>
         </article>
@@ -94,5 +108,6 @@
     <footer>
         <p>ClubHub - Les clubs étudiants réunis au même endroit.</p>
     </footer>
+    <script src="js/app.js" defer></script>
 </body>
 </html>

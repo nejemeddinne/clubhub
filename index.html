@@ -3,7 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script>
+        (() => {
+            const theme = localStorage.getItem('clubhub-theme');
+            if (theme === 'dark') document.documentElement.dataset.theme = 'dark';
+        })();
+    </script>
     <title>ClubHub - Accueil</title>
 </head>
 <body>
@@ -14,6 +20,7 @@
                 <li><a href="index.html">Accueil</a></li>
                 <li><a href="evenements.html">Tous les événements</a></li>
                 <li><a href="evenement.html">Atelier Arduino</a></li>
+                <li><button class="theme-toggle" type="button">Mode sombre</button></li>
             </ul>
         </nav>
     </header>
@@ -42,5 +49,6 @@
     <footer>
         <p>ClubHub - Les clubs étudiants réunis au même endroit.</p>
     </footer>
+    <script src="js/app.js" defer></script>
 </body>
 </html>
